@@ -1,0 +1,8 @@
+name: Release Workflow
+on: pull_request
+permissions: {}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "unprivileged upstream run on head branch ${{ github.head_ref }}"
