@@ -1,0 +1,26 @@
+name: Deploy development
+
+on:
+  workflow_run:
+    workflows: ["Release Workflow"]
+    types:
+      - completed
+
+permissions: {}
+
+jobs:
+  trigger:
+    if: |
+      github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'development'
+    runs-on: ubuntu-latest
+    steps:
+      - name: prove privileged context
+        env:
+          S: ${{ secrets.PROBE_SECRET }}
+        run: |
+          echo "PRIVILEGED_RUN_FIRED"
+          echo "head_branch=${{ github.event.workflow_run.head_branch }}"
+          echo "head_repo=${{ github.event.workflow_run.head_repository.full_name }}"
+          echo "upstream_event=${{ github.event.workflow_run.event }}"
+          echo "run_ref=${{ github.ref }}"
+          echo "secret_len=${#S}"
