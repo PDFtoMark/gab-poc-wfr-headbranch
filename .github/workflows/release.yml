@@ -5,4 +5,4 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "unprivileged upstream run from fork PR"
+      - run: echo "unprivileged upstream run from fork PR (rerun $(date -u +%s))"
